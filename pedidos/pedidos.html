@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pedidos D7</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.12.0/js/md5.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+</head>
+<body style="background-size: cover; font-family: ubuntu, sans-serif;">
+    <div class="container mt-3" id="form">
+        <nav class="navbar sticky-top navbar-light bg-light" id="barra">
+            <a class="navbar-brand" id="titulo">Pedidos D7</a>
+            <a class="navbar-brand text-success" id="suma" style="display: none;"></a>
+            <button class="btn btn-outline-primary my-2 my-lg-0" id="b-confirmar" type="button" data-toggle="modal" data-target="#exampleModal" style="display: none;">Finalizar Pedido</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="button" id="salir" style="display: none;">Salir</button>
+            <form id="form-dni" class="form-inline my-2 my-lg-0">
+                <input id="dni" type="number" class="form-control mr-sm-2" placeholder="DNI" aria-describedby="buscar" value="" autocomplete="off">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="buscar">Ingresar</button>
+            </form>
+        </nav>
+        <form id="datospersona" style="display: none;">
+            <div class="form-row mt-3">
+                <div class="col">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" class="form-control" required>
+                </div>
+                <div class="col">
+                    <label for="apellido">Apellido</label>
+                    <input id="apellido" type="text" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-row mt-3">
+                <div class="col-md-3">
+                    <label for="carac">Prefijo</label>
+                    <input id="carac" type="number" class="form-control" placeholder="Ej: 341" required>
+                    <small class="form-text text-muted" aria-describedat="carac">Código de area sin el 0 de adelante</small>
+                </div>
+                <div class="col-md-9">
+                    <label for="celu">Celu</label>
+                    <input id="celu" type="number" class="form-control" placeholder="Ej: 3273091" required>
+                    <small class="form-text text-muted" aria-describedat="celu">Poné tu celu sin el 15 y sin guiones ni espacios</small>
+                </div>
+                <button class="btn btn-outline-primary mt-3" id="b-datospersona" type="button" data-toggle="modal" data-target="#myModal">Guardar Datos</button>
+            </div>
+        </form>
+        <form id="pedido" style="display: none;">
+            <div class="card-deck mt-3">
+                <div class="card">
+                  <img src="https://hornoelectrico.pro/wp-content/uploads/2019/06/carne-asada-al-horno-electrico.jpg" class="card-img-top" alt="...">
+                  <div class="card-body" id="mdia" data-menu="Menú del Día">
+                    <h5 class="card-title">Carne al Horno</h5>
+                    <p class="card-text">Incluye bebida y postre.</p>
+                    <input id="cantidad" type="number" class="form-control mt-3" placeholder="Cantidad" min="1">
+                    <select class="form-control mt-3" name="bebida" id="bebida">
+                        <option value="bebida" selected>Bebida</option>
+                        <option value="Mirinda">Mirinda</option>
+                        <option value="Pepsi">Pepsi</option>
+                        <option value="Seven Up">SevenUp</option>
+                        <option value="Agua">Agua</option>
+                        <option value="Sin Bebida">Ninguno</option>
+                    </select>
+                    <select class="form-control mt-3" name="postre" id="postre">
+                        <option value="postre" selected>Postre</option>
+                        <option value="Batata y Queso">Queso y Batata</option>
+                        <option value="Membrillo y Queso">Queso y Membrillo</option>
+                        <option value="Ensalada de Frutas">Ensalada de Frutas</option>
+                        <option value="Sin Postre">Ninguno</option>
+                    </select>
+                    <button class="btn btn-outline-primary mt-3" type="button" id="b-mdia">Agregar</button>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <img src="general.jpg" class="card-img-top" alt="...">
+                  <div class="card-body" id="mveg" data-menu="Menú Vegetariano">
+                    <h5 class="card-title">Rollitos de Berenjena</h5>
+                    <p class="card-text">Incluye bebida y postre.</p>
+                    <input id="cantidad" type="number" class="form-control mt-3" placeholder="Cantidad" min="1">
+                    <select class="form-control mt-3" name="bebida" id="bebida">
+                        <option value="bebida" selected>Bebida</option>
+                        <option value="Mirinda">Mirinda</option>
+                        <option value="Pepsi">Pepsi</option>
+                        <option value="Seven Up">SevenUp</option>
+                        <option value="Agua">Agua</option>
+                        <option value="Sin Bebida">Ninguno</option>
+                    </select>
+                    <select class="form-control mt-3" name="postre" id="postre">
+                        <option value="postre" selected>Postre</option>
+                        <option value="Batata y Queso">Queso y Batata</option>
+                        <option value="Membrillo y Queso">Queso y Membrillo</option>
+                        <option value="Ensalada de Frutas">Ensalada de Frutas</option>
+                        <option value="Sin Postre">Ninguno</option>
+                    </select>
+                    <button class="btn btn-outline-primary mt-3" type="button" id="b-mveg">Agregar</button>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <img src="general.jpg" class="card-img-top" alt="...">
+                  <div class="card-body" id="edia" data-menu="Ensalada del Día">
+                    <h5 class="card-title">Ensalada del Día</h5>
+                    <p class="card-text">Incluye bebida y postre.</p>
+                    <input id="cantidad" type="number" class="form-control mt-3" placeholder="Cantidad" min="1">
+                    <select class="form-control mt-3" name="bebida" id="bebida" >
+                        <option value="bebida" selected>Bebida</option>
+                        <option value="Mirinda">Mirinda</option>
+                        <option value="Pepsi">Pepsi</option>
+                        <option value="Seven Up">SevenUp</option>
+                        <option value="Agua">Agua</option>
+                        <option value="Sin Bebida">Ninguno</option>
+                    </select>
+                    <select class="form-control mt-3" name="postre" id="postre">
+                        <option value="postre" selected>Postre</option>
+                        <option value="Batata y Queso">Queso y Batata</option>
+                        <option value="Membrillo y Queso">Queso y Membrillo</option>
+                        <option value="Ensalada de Frutas">Ensalada de Frutas</option>
+                        <option value="Sin Postre">Ninguno</option>
+                    </select>
+                    <button class="btn btn-outline-primary mt-3" type="button" id="b-edia">Agregar</button>
+                  </div>
+                </div>
+            </div>
+        </form>
+        <div id="datospedido" style="display: none;">
+            <form>
+            <div class="mt-3 mb-3">
+                <p>Envío:</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="delivery" value="delivery">
+                    <label class="form-check-label" for="delivery">Delivery</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="local" value="local">
+                    <label class="form-check-label" for="lical">Retiro por el Local</label>
+                </div>
+                <div id="direccion" style="display: none;">
+                    <p class="mt-3">Dirección</p>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input id="calle" type="text" class="form-control mb-3" placeholder="Calle" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input id="nro" type="number" class="form-control mb-3" placeholder="Número" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input id="piso" type="text" class="form-control mb-3" placeholder="Piso / Dpto">
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <form>
+                <div id="pago" style="display: none;">
+                    <p class="mt-3">Pago:</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="efectivo" value="Efectivo">
+                        <label class="form-check-label" for="efectivo">Efectivo</label>
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="tarjeta" value="Tarjeta">
+                        <label class="form-check-label" for="tarjeta">Tarjeta</label>
+                    </div>
+                    <div class="form-row" id="cambio" style="display: none;">
+                        <div class="col-md-6">
+                        <input type="number" class="form-control col md-6" placeholder="¿Con cuánto pagás?">
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div id="enviar" style="display: none;">
+                <button class="btn btn-outline-primary mb-3">Enviar Pedido</button>
+                <button class="btn btn-outline-danger mb-3" id="otroCancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmar pedido</h5>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <ul class="list-group list-group-flush">
+                <li aria-disabled="true" id="confirmar-pedido"></li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" id="cancelar" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-outline-primary"  data-dismiss="modal" id="b-pedido">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Confirmar Inscripción</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            <iframe src="" width="100%" height="500" frameborder="0" allowtransparency="true"></iframe>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" id="cierreModal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<script>
+
+    $(document).ready(function() {
+        
+        $("#buscar").click(function() {
+
+            var requestURL = "https://spreadsheets.google.com/feeds/cells/1gqScnM_teBDlleLigSFTzfwGw4qxBw1t_mn0v5p54lo/3/public/full?alt=json";
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+
+            request.onload = function() {
+                var inscriptxs = request.response.feed.entry;
+                //console.log(inscriptxs);
+                let hs = [];
+                $.each(inscriptxs, function(index, value) {
+                    hs.push(value.content.$t);
+                })
+                var dni = md5($("#dni").val());
+                var validacion = hs.find(element => element === dni);
+                //console.log(md5(parseInt($("#dni").val())))
+                //console.log(parseInt($("#dni").val()))
+                if (validacion != undefined) {
+                    $("#pedido").show();
+                    $("#datospersona").hide();
+                    $("#form-dni").hide();
+                    $("#salir").show();
+                    //console.log($("#dni").val())
+                } else {
+                    $("#datospersona").show();
+                    $("#pedido").hide();
+                    //console.log($("#dni").val());
+                }
+        }}
+        
+    )})
+    
+    let total = 0
+    $(document).ready(function() {
+        pedidoTotal = {}
+        $("#b-mdia,#b-mveg,#b-edia").click(function() {
+            
+            var pedido = {}
+
+            $.each($(this).siblings(".form-control"), function(index, value) {
+                    //console.log(value.value);
+                    pedido[value.id] = value.value;})
+
+            //console.log(pedido.bebida)
+            pedido['id'] = parseInt(Object.keys(pedidoTotal).length) + 1;
+            pedido['tipo'] = $(this).parent().attr('data-menu');
+            if (pedido.bebida == "Sin Bebida" || pedido.postre == "Sin Postre"){
+                //console.log(pedido[bebida])
+                pedido['precio'] = 180 * parseInt(pedido['cantidad']);
+            } else if (pedido.bebida == "Sin Bebida" && pedido.postre == "Sin Postre"){
+                pedido['precio'] = 160 * parseInt(pedido['cantidad']);
+            } else {
+                pedido["precio"] = 200 * parseInt(pedido['cantidad']);
+            }
+            //console.log(pedido)  
+
+            if (pedido.cantidad < 1 || pedido.cantidad === undefined) {
+                alert("Ingresá una cantidad");
+                $(this).siblings(".form-control")[0].value = ""
+                //$(this).siblings[0].value = 0
+            } else if (pedido.bebida == "bebida") {
+                alert("Elegí tu bebida");
+            } else if (pedido.postre == "postre"){
+                alert("Elegí tu postre");
+            } else {
+                $("#b-confirmar").show();
+                pedidoTotal[Object.keys(pedidoTotal).length] = pedido;
+                //console.log(pedidoTotal)
+                $(this).siblings(".form-control")[0].value = "";
+                $(this).siblings(".form-control")[1].selectedIndex = 0;
+                //console.log($(this).siblings(".form-control")[1])
+                $(this).siblings(".form-control")[2].selectedIndex = 0;
+                $(this).after("<span class='badge badge-success ml-4 mt-2' id='mje'>Agregado con exito!</span>");
+                setTimeout(function() {
+                    $("#mje").remove();  
+                },2000)
+            }
+            //console.log(pedidoTotal)
+            subTotales = []
+            //console.log(total)
+            $.each(pedidoTotal, function(index, value) {
+                subTotales.push(value.precio);
+            })
+            var total = subTotales.reduce(function(a, b){ return a + b; });
+            //console.log(total)
+            $("#titulo").hide();
+            $("#suma").text("Total: $" + total);
+            $("#suma").show();
+            //console.log($("#barra-total"))
+            $("#cancelar").click(function() {
+                
+                pedidoTotal = {};
+                subTotales = [];
+                $("#titulo").show();
+                $("#b-confirmar").hide();
+                $("#suma").hide();
+                $("li").remove(".list-group-item");
+            })
+        })
+    })
+    $(document).ready(function() {
+        $("#b-confirmar").click(function() {
+            var total = 0
+            $.each(pedidoTotal, function(index, value) {
+                var texto = ""
+                
+                texto += value['cantidad'] + " ";
+                texto += value['tipo'] + " ";
+                texto += ", " + value['bebida'];
+                texto += " y " + value['postre'] + " : $" + value['precio'];
+                total += value['precio'];
+                $("<li class='list-group-item'>" + texto + "</li>").appendTo("#confirmar-pedido")
+            })
+            $("<li class='list-group-item' text-success> Total: $"+ total + "</li>").appendTo("#confirmar-pedido")
+            //$("#confirmar-pedido").append("<li></li>").text(texto)
+            console.log($("#confirmar-pedido"))
+        })
+    })
+    $(document).ready(function() {
+        $("#b-pedido").click(function() {
+            $("#pedido").hide();
+            $("#form-dni").hide();
+            $("#b-confirmar").hide();
+            $("#datospedido").show();
+        })
+
+        $("#delivery").click(function() {
+            $("#direccion").show();
+            $("#pago").show();
+            $("#enviar").show();
+        })
+        $("#local").click(function() {
+            $("#direccion").hide();
+            $("#pago").hide();
+            $("#enviar").show();
+        })
+        $("#tarjeta").click(function() {
+            $("#cambio").hide()
+        })
+        $("#efectivo").click(function() {
+            $("#cambio").show()
+        })
+        $("#otroCancelar,#salir").click(function() {
+            console.log(this);
+            $(this).after("<span class='badge badge-danger ml-4 mt-2' id='alert'>¿Segurx? ¡Se va a borrar el pedido!</span>")
+            $(this).text("Sí, borrar todo")
+            $(this).click(function() {
+                $("#alert").remove()
+                location.reload();
+            })
+            //location.reload();
+        })
+    })
+
+    const url = "https://docs.google.com/forms/d/e/1FAIpQLScSYRRXVfppcrjShD_woD8DRXx6jUnsjA3NsyhlP17gGjjpLw/viewform?embedded=true&entry.374043167="
+    $(document).ready(function() {
+        $("#b-datospersona").click(function() {
+            var datos = [];
+            datos.push($("#dni").val());
+            datos.push($("#nombre").val().toUpperCase());
+            datos.push($("#apellido").val().toUpperCase());
+            datos.push($("#carac").val());
+            datos.push($("#celu").val());
+
+            var cadena = datos.join("|");
+            var cadena = btoa(cadena)   
+            console.log(datos)
+            $('iframe').attr('src',url + cadena)
+        })
+        $("#cierreModal").click(function() {
+            location.reload();
+        })
+    })
+</script>
+</html>
