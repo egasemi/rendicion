@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/png" href="/media/icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <title>Rendición Lácteos CF</title>
+</head>
+<body background="/media/fondo.jpg" style="background-size: cover; font-family: ubuntu, sans-serif;">
+    <br>
+    <div class= 'container'>
+      <div id= "tituloL" style="display: '';">
+        <img src="/media/logolacteo.svg" alt="Socio Lácteo" class="img-fluid mx-auto d-block" width="460" height="345">
+      </div>
+      <div id= "tituloT" style="display: none;">
+        <img src="/media/logotambo.svg" alt="Socio Tambero" class="img-fluid mx-auto d-block" width="460" height="345">
+      </div>
+      <br>
+        <form>
+            <select name="tipo" id="tipo" class="form-control mb-3" oninput="tipos(self)">
+                <option value="110">Socio Lácteo</option>
+                <option value="660">Socio Tambero</option>
+            </select>
+            <div class="form-group" id='promosSt' style="display: none;">
+                <label for="promosRecibidas">Promos Recibidas</label>
+                <input type="number" class="form-control" id="promosRecibidas" value='0'>
+                <small class="form-text text-muted" aria-describedat="promosRecibidas"></small>
+            </div>
+            <div id='form' style="display: '';">
+            <form id="rendicion">
+                <div class="form-group">
+                    <label for="distrito">Distrito</label>
+                    <select name="Distrito" id="distrito" class=form-control oninput="stock(self)" value="">
+                        <option selected disabled>Elegí el Distrito</option>
+                        <option value="D1" data-index="1">Distrito Sur - D1</option>
+                        <option value="D2" data-index="3">Distrito Sudoeste - D2</option>
+                        <option value="D3" data-index="5">Distrito Oeste - D3</option>
+                        <option value="D4" data-index="7">Distrito Noroeste - D4</option>
+                        <option value="D5" data-index="9">Distrito Norte - D5</option>
+                        <option value="D6" data-index="11">Distrito Centro - D6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stockInicial">Stock Inicial</label>
+                    <input type="number" class="form-control" id="stockInicial">
+                    <small class="form-text text-muted" aria-describedat="stockInicial">Sobrante de la semana anterior (se carga automáticamente con la rendición de la semana pasada)</small>
+                </div>
+                <div class="form-group">
+                    <label for="litrosRecibidos">Litros Recibidos</label>
+                    <input type="number" class="form-control" id="litrosRecibidos" data-toggle="tooltip" title="Litros que se recibieron esta semana sin contar pinchados ni faltantes">
+                    <small class="form-text text-muted" aria-describedat="litrosRecibidos">Litros que se recibieron esta semana sin contar pinchados ni faltantes</small>
+                </div>
+                <div class="form-group">
+                    <label for="pinchados">Sachetes Pinchados</label>
+                    <input type="number" class="form-control" id="pinchados">
+                    <small class="form-text text-muted" aria-describedat="pinchados">Sachets que se pincharon después de recibir las leches y que no se puedan devolver la semana siguiente</small>
+                </div>
+                </form>
+            </div>
+            <br>    
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">Billete</span>
+                </div>
+                <input type='text' class='form-control' value='Cantidad' disabled>
+                <div class='input-group-append'>
+                    <span class='input-group-text' style="width: 100px">SubTotal</span>
+                </div>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$10</span>
+                </div>
+                <input type='number' class='form-control' data-val='10' value='' id="diez">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$20</span>
+                </div>
+                <input type='number' class='form-control' data-val='20' value='' id="veinte">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$50</span>
+                </div>
+                <input type='number' class='form-control' data-val='50' value='' id="cincuenta">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$100</span>
+                </div>
+                <input type='number' class='form-control' data-val='100' value='' id="cien">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$200</span>
+                </div>
+                <input type='number' class='form-control' data-val='200' value='' id="docientos">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$500</span>
+                </div>
+                <input type='number' class='form-control' data-val='500' value='' id="quinientos">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">$1000</span>
+                </div>
+                <input type='number' class='form-control' data-val='1000' value='' id="mil">
+                <label class='input-group-text' style="width: 100px" value=''></label>
+            </div>
+            <div class='input-group'>
+                <div class='input-group-prepend' id="div-total">
+                    <span class='input-group-text' style="width: 100px">Total</span>
+                </div>
+                <input id='total' type='text' class='form-control text-danger' data-total="" disabled value="0">
+            </div>
+            <p id= 'modulo' class='form-text text-danger mb-3' aria-describedat="total"></p>
+            <!--div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px" id="promos">Promos</span>
+                </div>
+                <input id='promo' type='number' class='form-control' disabled value="0">
+            </div-->
+            <div id= 'div-sachets' class='input-group mb-3' style="display: '';">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">Sachets</span>
+                </div>
+                <input id='sachets' type='number' class='form-control' disabled value="0">
+            </div>
+            <div id='div-sobrante' class='input-group mb-3' style="display: '';">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style="width: 100px">Sobrante</span>
+                </div>
+                <input id='sobrante' type='number' class='form-control' disabled value="0">
+            </div>
+        </form>
+        <div class="form-group" id='div-pedido' style="display: '';">
+            <label for="pedido">Pedido Próxima Semana</label>
+            <input type="number" class="form-control" id="pedido" step="15">
+            <small class="form-text text-muted" aria-describedat="pedido">Pedido en sachets para la semana siguente</small>
+        </div>
+        <div class="form-group" id='div-enviar' style="display: '';">
+        <button type="submit" id="enviar" class="btn btn-outline-primary" onsubmit="enviar(self)">Enviar Rendición</button>
+        <small class="form-text text-muted" aria-describedat="enviar">Este botón te lleva al formulario de rendición de siempre pero con todos los datos cargados</small>
+        </div>
+        <br>
+        <div class="form-group mb-3">
+            <label for="comentario">Mandá tu aclaración, consulta o sugerencia:</label>
+            <textarea class="form-control" id="comentario"></textarea>
+            <br>
+            <button class="btn btn-outline-success" id="enviarComentario">Enviar</button>
+        </div>
+    </div>
+    <!--script>
+        
+        var precio = 120;
+        
+        // swich tipo de socio
+
+        function tipos(self) {
+            precio = self.document.activeElement.value;
+
+            if (precio == 660) {
+                self.document.getElementById('div-sachets').style.display = 'none';
+                self.document.getElementById("form").style.display = 'none';
+                self.document.getElementById("div-pedido").style.display = 'none';
+                self.document.getElementById("div-enviar").style.display = 'none';
+                self.document.getElementById('promosSt').style.display = '';
+                $("#tituloL").hide();
+                $("#tituloT").show();
+            } else {
+                self.document.getElementById('div-sachets').style.display = '';
+                self.document.getElementById('form').style.display = '';
+                self.document.getElementById("div-pedido").style.display = '';
+                self.document.getElementById("div-enviar").style.display = '';
+                self.document.getElementById('promosSt').style.display = 'none';
+                $("#tituloL").show();
+                $("#tituloT").hide();
+            }
+        }
+
+        // contadora
+
+        function subt(self) {
+
+            // validación de input
+
+            if (isNaN(self.document.activeElement.valueAsNumber)) {
+                var data = 0
+            } else if(self.document.activeElement.valueAsNumber < 0) {
+                self.document.activeElement.className = 'form-control is-invalid'
+                self.document.activeElement.value = 0
+                self.document.activeElement.nextElementSibling.value = 0
+            } else {
+                // cálculo de cantidad de billetes por su valor (subtotales)
+                self.document.activeElement.className = 'form-control';
+                var data = self.document.activeElement.valueAsNumber;
+                var valor = parseInt(self.document.activeElement.dataset.val);
+
+                self.document.activeElement.nextElementSibling.value = data * valor;
+                self.document.activeElement.nextElementSibling.textContent = '$' + data * valor;
+            }
+
+            // suma de subtotales
+
+            var totales = document.querySelectorAll('label');
+            var arreglo = [];
+            totales.forEach(element => {
+                if (isNaN(element.value)) {
+                    arreglo.push(0);
+                } else {
+                    arreglo.push(element.value)
+                }
+            });
+            total =  arreglo.reduce((a, b) => a + b,0);
+
+            self.document.getElementById('total').value = '$' + total;
+
+            // validación del total
+
+            const tDanger = 'form-control is-invalid text-danger';
+            const tSuccess = 'form-control is-valid text-success';
+
+            var mensaje = 'Faltan $' + (precio - (total % precio)) + ' para completar otro combo'
+
+            if (total % precio == 0) {
+                self.document.getElementById('total').className = tSuccess;
+                self.document.getElementById('modulo').textContent = '';
+            } else {
+                self.document.getElementById('total').className = tDanger;
+                self.document.getElementById('modulo').style.display = '';
+                self.document.getElementById('modulo').textContent = mensaje
+            }
+            
+            //total en promos
+
+            var promo = Math.floor(total / precio);
+
+            self.document.getElementById('promo').value = promo;
+
+            var sachets = promo * 3;
+
+            //condicional según tipo de socio
+
+            if (precio == 110) {
+                var stock = parseInt($("#stockInicial").val()) + parseInt($("#litrosRecibidos").val()) - parseInt($("#pinchados").val());
+
+                self.document.getElementById('sachets').value = sachets;
+                
+                self.document.getElementById('sobrante').value = stock - sachets;
+            } else {
+                var stock = $("#promosRecibidas").val();
+
+                self.document.getElementById('sobrante').value = stock - promo;
+            }
+        
+        //stock semana pasada
+
+        }
+        function stock(self) {
+            var requestURL = "https://spreadsheets.google.com/feeds/cells/1YG207kxRF6n9ei7rT9vijjIHQjEMhtdT7OPoU1_SKeo/1/public/full?alt=json";
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+
+            request.onload = function() {
+                var dis = request.response;
+
+                var indice = self.document.activeElement.selectedOptions[0].dataset.index;
+                var stockInicial = dis.feed.entry[indice].content.$t;
+                
+                self.document.getElementById('stockInicial').value = stockInicial
+            }
+        }
+
+        //envio rendicion
+
+        $(document).ready(function() {
+            $("#enviar").on("click", function() {
+                var url = "https://docs.google.com/forms/d/e/1FAIpQLSdIl5liLdrBHNEcVBojqz6zaWo0vgMhFOXdlYujl-apGQQFEw/viewform?usp=pp_url&entry.79660065="+ $("#distrito").val() +"&entry.133623447=Socix+L%C3%A1cteo&entry.2047137465="+ $("#stockInicial").val() +"&entry.209139803="+ $("#litrosRecibidos").val() +"&entry.2006968125="+ $("#promo").val() +"&entry.2029919986="+ total +"&entry.199604310="+ $("#sobrante").val() +"&entry.1058861148="+ $("#pinchados").val() +"&entry.1556753001="+ $("#pedido").val();
+                window.open(url,'_blank');
+            })
+        })
+
+        //comentarios
+
+        $(document).ready(function() {
+            $("#enviarComentario").on("click",function() {
+                var mje = encodeURI($("#comentario").val());
+                var wa = "https://wa.me/5493413341777?text=";
+                window.open(wa + mje,'_blank');
+            })
+        })
+    </script-->
+    <script src="scripts.js"></script>
+    </div>
+</body>
+</html>
