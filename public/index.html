@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <link rel="icon" type="image/png" href="/media/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <title>Rendición Lácteos CF</title>
@@ -17,25 +18,25 @@
       <div id= "tituloL" style="display: '';">
         <img src="/media/logolacteo.svg" alt="Socio Lácteo" class="img-fluid mx-auto d-block" width="460" height="345">
       </div>
-      <div id= "tituloT" style="display: none;">
+      <!--div id= "tituloT" style="display: none;">
         <img src="/media/logotambo.svg" alt="Socio Tambero" class="img-fluid mx-auto d-block" width="460" height="345">
-      </div>
+      </div-->
       <br>
         <form>
-            <select name="tipo" id="tipo" class="form-control mb-3" oninput="tipos(self)">
+            <!--select name="tipo" id="tipo" class="form-control mb-3" oninput="tipos(self)">
                 <option value="110">Socio Lácteo</option>
                 <option value="660">Socio Tambero</option>
             </select>
             <div class="form-group" id='promosSt' style="display: none;">
                 <label for="promosRecibidas">Promos Recibidas</label>
-                <input type="number" class="form-control" id="promosRecibidas" value='0'>
+                </home/emi/Git/contadora/calc2/rendicion/public/index.htmlinput type="number" class="form-control" id="promosRecibidas" value='0'>
                 <small class="form-text text-muted" aria-describedat="promosRecibidas"></small>
-            </div>
+            </div-->
             <div id='form' style="display: '';">
             <form id="rendicion">
                 <div class="form-group">
                     <label for="distrito">Distrito</label>
-                    <select name="Distrito" id="distrito" class=form-control oninput="stock(self)" value="">
+                    <select name="Distrito" id="distrito" class=form-control value="">
                         <option selected disabled>Elegí el Distrito</option>
                         <option value="D1" data-index="1">Distrito Sur - D1</option>
                         <option value="D2" data-index="3">Distrito Sudoeste - D2</option>
@@ -52,12 +53,12 @@
                 </div>
                 <div class="form-group">
                     <label for="litrosRecibidos">Litros Recibidos</label>
-                    <input type="number" class="form-control" id="litrosRecibidos" data-toggle="tooltip" title="Litros que se recibieron esta semana sin contar pinchados ni faltantes">
+                    <input type="number" class="form-control" value=0 id="litrosRecibidos">
                     <small class="form-text text-muted" aria-describedat="litrosRecibidos">Litros que se recibieron esta semana sin contar pinchados ni faltantes</small>
                 </div>
                 <div class="form-group">
                     <label for="pinchados">Sachetes Pinchados</label>
-                    <input type="number" class="form-control" id="pinchados">
+                    <input type="number" class="form-control" id="pinchados" value=0>
                     <small class="form-text text-muted" aria-describedat="pinchados">Sachets que se pincharon después de recibir las leches y que no se puedan devolver la semana siguiente</small>
                 </div>
                 </form>
@@ -149,20 +150,13 @@
         </form>
         <div class="form-group" id='div-pedido' style="display: '';">
             <label for="pedido">Pedido Próxima Semana</label>
-            <input type="number" class="form-control" id="pedido" step="15">
-            <small class="form-text text-muted" aria-describedat="pedido">Pedido en sachets para la semana siguente</small>
+            <input type="number" class="form-control mb-3" id="pedidoEnt" step="15" placeholder="Enteras">
+            <input type="number" class="form-control" id="pedidoDesc" step="15" placeholder="Descremadas">
         </div>
         <div class="form-group" id='div-enviar' style="display: '';">
-        <button type="submit" id="enviar" class="btn btn-outline-primary" onsubmit="enviar(self)">Enviar Rendición</button>
-        <small class="form-text text-muted" aria-describedat="enviar">Este botón te lleva al formulario de rendición de siempre pero con todos los datos cargados</small>
+        <button type="button" id="enviar" class="btn btn-outline-primary">Enviar Rendición</button>
         </div>
         <br>
-        <div class="form-group mb-3">
-            <label for="comentario">Mandá tu aclaración, consulta o sugerencia:</label>
-            <textarea class="form-control" id="comentario"></textarea>
-            <br>
-            <button class="btn btn-outline-success" id="enviarComentario">Enviar</button>
-        </div>
     </div>
     <!--script>
         
@@ -309,4 +303,24 @@
     <script src="scripts.js"></script>
     </div>
 </body>
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Resumen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="contenido-modal">
+          <p>Copiá esto y mandamelo por WhatsApp</p>
+          <small class="form-text text-muted mb-3">Si entrás desde el celu lo envía directamnete ;)</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample1">Copiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </html>
