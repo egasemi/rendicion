@@ -8,7 +8,7 @@ $(document).ready(function(){
             $(this).next().text(subt);
         }
         var lista = [];
-        $('label').slice(5,12).each(function(){
+        $('label').slice(4,11).each(function(){
             if (parseInt($(this).text()) >0 ) {
                 lista.push(parseInt($(this).text()))
             }
