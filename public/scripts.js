@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#diez,#veinte,#cincuenta,#cien,#docientos,#quinientos,#mil").keyup(function subtotal (){
+    $("#diez,#veinte,#cincuenta,#cien,#docientos,#quinientos,#mil,#stockInicial,#litrosRecibidos").keyup(function subtotal (){
 
         var subt = parseInt(this.value)*parseInt(this.dataset.val);
         if (isNaN(subt) || subt < 0) {
@@ -31,7 +31,7 @@ $(document).ready(function(){
         
     })
     $("#distrito").change(function stock(){
-        var requestURL = "https://spreadsheets.google.com/feeds/cells/1YG207kxRF6n9ei7rT9vijjIHQjEMhtdT7OPoU1_SKeo/1/public/full?alt=json";
+        var requestURL = "https://spreadsheets.google.com/feeds/cells/1qDfmW1_zmA9zVq-dk8XV3YwREsJCUxFEcLAz37LwTPE/6/public/values?alt=json";
         var request = new XMLHttpRequest();
         request.open('GET', requestURL);
         request.responseType = 'json';
