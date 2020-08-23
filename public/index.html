@@ -151,7 +151,9 @@
         <div class="form-group" id='div-pedido' style="display: '';">
             <label for="pedido">Pedido Próxima Semana</label>
             <input type="number" class="form-control mb-3" id="pedidoEnt" step="15" placeholder="Enteras">
+            <small class='text-danger mb-3' style="display:none;">Tiene que ser múltiplo de 15</small>
             <input type="number" class="form-control" id="pedidoDesc" step="15" placeholder="Descremadas">
+            <small class='text-danger mb-3' style="display:none;">Tiene que ser múltiplo de 15</small>
         </div>
         <div class="form-group" id='div-enviar' style="display: '';">
         <button type="button" id="enviar" class="btn btn-outline-primary">Enviar Rendición</button>

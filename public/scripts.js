@@ -77,4 +77,18 @@ Descreamdas: *" + desc + "*"
         }
         
     })
+
+    $("#pedidoEnt,#pedidoDesc").change(function() {
+        if ($(this).val() % 15 > 0) {
+            $(this).attr("class","form-control text-danger");
+            $(this).next().show();
+            $("#enviar").hide();
+        } else {
+            $(this).attr("class","form-control mb-3 text-success");
+            $(this).next().hide();
+            $("#enviar").show();
+
+
+        }
+    })
 })
