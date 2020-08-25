@@ -151,9 +151,9 @@
         <div class="form-group" id='div-pedido' style="display: '';">
             <label for="pedido">Pedido Próxima Semana</label>
             <input type="number" class="form-control mb-3" id="pedidoEnt" step="15" placeholder="Enteras">
-            <small class='text-danger mb-3' style="display:none;">Tiene que ser múltiplo de 15</small>
+            <small class='text-danger mb-3' style="display:none;" id="alertaEnt">Tiene que ser múltiplo de 15</small>
             <input type="number" class="form-control" id="pedidoDesc" step="15" placeholder="Descremadas">
-            <small class='text-danger mb-3' style="display:none;">Tiene que ser múltiplo de 15</small>
+            <small class='text-danger mb-3' style="display:none;" id="alertaDesc">Tiene que ser múltiplo de 15</small>
         </div>
         <div class="form-group" id='div-enviar' style="display: '';">
         <button type="button" id="enviar" class="btn btn-outline-primary">Enviar Rendición</button>
@@ -310,7 +310,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Resumen</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="x">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -319,7 +319,7 @@
           <small class="form-text text-muted mb-3">Si entrás desde el celu lo envía directamnete ;)</small>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrar">Cerrar</button>
           <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample1">Copiar</button>
         </div>
       </div>

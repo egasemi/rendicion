@@ -50,45 +50,44 @@ $(document).ready(function(){
     $("#enviar").click(function(){
         ent = $("#pedidoEnt").val();
         desc = $("#pedidoDesc").val();
+        if (ent % 15 != 0 && ent != 0) {
+            var sugerencia = parseInt(ent) - ent % 15;
+            $("#alertaEnt").text("Tiene que ser múltiplo de 15 (" + sugerencia + " ó " + (sugerencia + 15) + ")")
+            $("#pedidoEnt").attr("class","form-control text-danger");
+            $("#pedidoEnt").next().show();
+        } else if (desc % 15 != 0 && desc != 0) {
+            var sugerencia = parseInt(desc) - desc % 15;
+            $("#alertaDesc").text("Tiene que ser múltiplo de 15 (" + sugerencia + " ó " + (sugerencia + 15) + ")")
+            $("#pedidoDesc").attr("class","form-control text-danger");
+            $("#pedidoDesc").next().show();
+        } else {
+            $("#pedidoEnt,#pedidoDesc").attr("class","form-control text-success mb-3");
+            $("#alertaEnt,#alertaDesc").hide();
+            if (ent === '') {
+                ent = 0;
+            }
+            if (desc === ''){
+                desc = 0;
+            }
 
-        if (ent === '') {
-            ent = 0;
-        }
-        if (desc === ''){
-            desc = 0;
-        }
-
-        var mje = "Total Vendido: *$" + $("#total").val() + "*\n\
+            mje = "Total Vendido: *$" + $("#total").val() + "*\n\
 Total Sachets: *" + $("#sachets").val() + "*\n\
 Sobrante: *" + $("#sobrante").val() + "*\n\
 Pedido Semana que viene: \n\
 Enteras: *" + ent + "*\n\
-Descreamdas: *" + desc + "*"
+Descreamdas: *" + desc + "*";
 
-        //console.log(desc)
-        //console.log(ent)
-        //console.log(mje)
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            window.open("https://wa.me/5493413341777?text=" + encodeURI(mje),'_blank');
-        } else {
-            new ClipboardJS('.btn');
-            $("#contenido-modal").append("<textarea id='clipboardExample1' class='form-control' rows='6'>" + mje + "</textarea>");
-            $('#myModal').modal('show')
-        }
-        
-    })
-
-    $("#pedidoEnt,#pedidoDesc").change(function() {
-        if ($(this).val() % 15 > 0) {
-            $(this).attr("class","form-control text-danger");
-            $(this).next().show();
-            $("#enviar").hide();
-        } else {
-            $(this).attr("class","form-control mb-3 text-success");
-            $(this).next().hide();
-            $("#enviar").show();
-
-
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                window.open("https://wa.me/5493413341777?text=" + encodeURI(mje),'_blank');
+            } else {
+                new ClipboardJS('.btn');
+                $("#contenido-modal").append("<textarea id='clipboardExample1' class='form-control' rows='6'>" + mje + "</textarea>");
+                $('#myModal').modal('show')
+            }
+            $("#x,#cerrar").click(function () {
+                mje = '';
+                $("#clipboardExample1").remove();
+            })
         }
     })
 })
